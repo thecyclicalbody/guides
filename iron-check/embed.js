@@ -32,6 +32,30 @@
   if (!mount) { mount = document.createElement("div"); mount.id = MOUNT_ID; cur.parentNode.insertBefore(mount, cur); }
   if (mount.getAttribute("data-loaded")) return;
   mount.setAttribute("data-loaded", "1");
+  var GATE = {"param": "access", "code": "iron-bd362e", "html": "<div style=\"font-family:'Work Sans',system-ui,-apple-system,'Segoe UI',sans-serif;color:#342D21;background:#FBF7F1;border:1px solid #E3D4C0;border-radius:22px;max-width:560px;margin:clamp(32px,7vw,88px) auto;padding:32px 24px;text-align:center;line-height:1.6;box-sizing:border-box\">\n<link href=\"https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Work+Sans:wght@400;600&display=swap\" rel=\"stylesheet\">\n<h2 style=\"font-family:'Playfair Display',Georgia,serif;font-weight:500;font-size:1.8rem;line-height:1.2;margin:0 0 .6em;color:#342D21\">Your Iron Check is free</h2>\n<p style=\"margin:0 0 1.2em;font-size:1.05rem\">Sign up with your email and you&#x27;ll go straight to your check. It takes about five minutes, and your answers stay on your device.</p>\n<a href=\"/access-iron-check\" style=\"display:inline-block;border-radius:999px;padding:13px 26px;background:#342D21;color:#fff;font-weight:600;text-decoration:none\">Get my free Iron Check</a>\n<p style=\"margin:1.2em 0 0;font-size:.9rem;color:#5E5446\">Already signed up? Just enter your email again and you&#x27;ll go straight in.</p>\n</div>"};
+  if (GATE) {
+    // Soft gate: only on the live site, never inside the Squarespace editor frame.
+    var live = /(^|\.)thecyclicalbody\.com$/.test(location.hostname) && window.self === window.top || /[?&]gatetest=1/.test(location.search);
+    var KEY = "tcb-access-iron-check", ok = false;
+    try {
+      var u = new URL(location.href);
+      if (u.searchParams.get(GATE.param) === GATE.code) {
+        ok = true;
+        try { localStorage.setItem(KEY, "1"); } catch (e) {}
+        if (window.tcbTrack) window.tcbTrack("iron-check/unlocked");
+        u.searchParams.delete(GATE.param);
+        history.replaceState(null, "", u.pathname + u.search + u.hash);
+      }
+    } catch (e) {}
+    if (!ok) { try { ok = localStorage.getItem(KEY) === "1"; } catch (e) {} }
+    if (live && !ok) {
+      if (window.tcbTrack) window.tcbTrack("iron-check/gate-shown");
+      mount.innerHTML = GATE.html;
+      var btn = mount.querySelector("a");
+      if (btn) btn.addEventListener("click", function () { if (window.tcbTrack) window.tcbTrack("iron-check/gate-click"); });
+      return;
+    }
+  }
   var tpl = document.createElement("template");
   tpl.innerHTML = HTML;
   var frag = tpl.content;
