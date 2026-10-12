@@ -10,14 +10,17 @@
     if (window.umami && window.umami.track) window.umami.track(n, d); else queue.push([n, d]);
   }
   window.tcbTrack = send;
-  if (local || !CFG.websiteId || document.querySelector("script[data-website-id]")) return;
+  if (local || !CFG.websiteId) return;
+  // Flush queued events once Umami is ready, whether we load it or the site header already does.
+  var t = setInterval(function () {
+    if (window.umami && window.umami.track) { clearInterval(t); queue.splice(0).forEach(function (q) { window.umami.track(q[0], q[1]); }); }
+  }, 200);
+  setTimeout(function () { clearInterval(t); }, 15000);
+  if (document.querySelector("script[data-website-id]")) return;
   var s = document.createElement("script");
   s.defer = true; s.src = CFG.script;
   s.setAttribute("data-website-id", CFG.websiteId);
   if (CFG.domains) s.setAttribute("data-domains", CFG.domains);
-  s.onload = function () { var t = setInterval(function () {
-    if (window.umami && window.umami.track) { clearInterval(t); queue.splice(0).forEach(function (q) { window.umami.track(q[0], q[1]); }); }
-  }, 200); setTimeout(function () { clearInterval(t); }, 10000); };
   document.head.appendChild(s);
 })();
 
