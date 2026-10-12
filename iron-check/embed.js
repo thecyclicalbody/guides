@@ -2,7 +2,7 @@
 /* Cookieless analytics shim: window.tcbTrack(name, data). Milestones/clicks only. */
 (function () {
   if (window.tcbTrack) return;
-  var CFG = {"script": "https://cloud.umami.is/script.js", "websiteId": "", "domains": "thecyclicalbody.com"};
+  var CFG = {"script": "https://cloud.umami.is/script.js", "websiteId": "d9b90c52-cece-402b-a02a-a7e8a0dfec15", "domains": "thecyclicalbody.com"};
   var local = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
   var queue = [];
   function send(n, d) {
