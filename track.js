@@ -7,8 +7,13 @@
   var local = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
   var queue = [];
   function page() { return location.pathname.replace(/\/+$/, "") || "/"; }
+  var last = { key: "", at: 0 };
   function send(name, data) {
     data = data || {}; data.page = data.page || page();
+    // Squarespace re-dispatches clicks on same-page anchor buttons: drop identical events within 1s.
+    var key = name + JSON.stringify(data), now = Date.now();
+    if (key === last.key && now - last.at < 1000) return;
+    last = { key: key, at: now };
     if (local) { (window.tcbTrackLog = window.tcbTrackLog || []).push([name, data]); console.debug("[tcbTrack]", name, data); return; }
     if (window.umami && window.umami.track) window.umami.track(name, data); else queue.push([name, data]);
   }
