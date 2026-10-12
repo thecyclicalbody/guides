@@ -17,6 +17,7 @@
     if (local) { (window.tcbTrackLog = window.tcbTrackLog || []).push([name, data]); console.debug("[tcbTrack]", name, data); return; }
     if (window.umami && window.umami.track) window.umami.track(name, data); else queue.push([name, data]);
   }
+  if (!window.tcbTrack) window.tcbTrack = send; // shared with embeds and the download page
   var t = setInterval(function () {
     if (window.umami && window.umami.track) { clearInterval(t); queue.splice(0).forEach(function (q) { window.umami.track(q[0], q[1]); }); }
   }, 200);
