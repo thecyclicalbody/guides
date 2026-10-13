@@ -27,9 +27,11 @@
   function fit() {
     var h = document.querySelector("header"), c = mount.querySelector(":scope > div");
     if (!h || !c) return;
-    c.style.marginTop = "";
+    if (!c.dataset.base) c.dataset.base = parseFloat(getComputedStyle(c).marginTop);
+    var base = +c.dataset.base;
+    c.style.marginTop = base + "px";
     var gap = c.getBoundingClientRect().top - h.getBoundingClientRect().bottom;
-    if (gap < 56) c.style.marginTop = (parseFloat(getComputedStyle(c).marginTop) + 56 - gap) + "px";
+    if (gap < 56) c.style.marginTop = (base + 56 - gap) + "px";
   }
   setTimeout(fit, 0); setTimeout(fit, 800); window.addEventListener("resize", fit);
 
