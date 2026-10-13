@@ -23,6 +23,15 @@
   var btn = function (href, t, extra) { return '<a href="' + esc(href) + '"' + (extra || "") + ' style="display:inline-block;border-radius:999px;padding:13px 26px;background:#342D21;color:#fff;font-weight:600;text-decoration:none">' + t + '</a>'; };
   var small = function (t) { return '<p style="margin:1.2em 0 0;font-size:.9rem;color:#5E5446">' + t + '</p>'; };
 
+  // Page look (only on /download, where this script runs): espresso background, light top-level menu items.
+  if (!document.getElementById("tcb-dl-theme")) {
+    var st = document.createElement("style"); st.id = "tcb-dl-theme";
+    st.textContent = "body{background:#342D21!important}" +
+      "header#header .header-display-desktop .header-nav-item>a,header#header .header-nav-folder-title,header#header .header-nav-folder-title-text{color:#F4ECE1!important}" +
+      "header#header .burger-inner>div{background-color:#F4ECE1!important}";
+    document.head.appendChild(st);
+  }
+
   // Keep clear space below the site header, whatever its height (it grows when the menu wraps).
   function fit() {
     var h = document.querySelector("header"), c = mount.querySelector(":scope > div");
