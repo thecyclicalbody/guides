@@ -2,7 +2,14 @@
    Squarespace page /download holds: <div id="tcb-download"></div><script src="https://guides.thecyclicalbody.com/download.js"></script>
    Sign-up redirect per ebook: /download?f=<slug>&access=<code>. Source: Lead Magnets/tracking/download.js. Built by tools/build.py. */
 (function () {
-  var DOWNLOADS = {};
+  var DOWNLOADS = {
+ "pms": {
+  "title": "The PMS workbook",
+  "file": "https://guides.thecyclicalbody.com/pms/pms.pdf",
+  "code": "pms-6274d0",
+  "signupUrl": "/access-pms"
+ }
+};
   var cur = document.currentScript;
   var mount = document.getElementById("tcb-download");
   if (!mount) { mount = document.createElement("div"); mount.id = "tcb-download"; cur.parentNode.insertBefore(mount, cur); }
