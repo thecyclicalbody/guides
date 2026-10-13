@@ -18,10 +18,10 @@
     if (tries < 20) setTimeout(function () { track(n, tries + 1); }, 300); }
   function esc(t) { return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;"); }
   var card = function (inner) { return '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Work+Sans:wght@400;600&display=swap" rel="stylesheet">' +
-    '<div style="font-family:\'Work Sans\',system-ui,sans-serif;color:#F4ECE1;background:#342D21;border:1px solid #342D21;border-radius:22px;max-width:560px;width:calc(100% - 32px);margin:clamp(120px,14vw,190px) auto clamp(48px,8vw,96px);padding:32px 24px;text-align:center;line-height:1.6;box-sizing:border-box">' + inner + '</div>'; };
-  var h2 = function (t) { return '<h2 style="font-family:\'Playfair Display\',Georgia,serif;font-weight:500;font-size:1.8rem;line-height:1.2;margin:0 0 .6em;color:#FBF7F1">' + t + '</h2>'; };
-  var btn = function (href, t, extra) { return '<a href="' + esc(href) + '"' + (extra || "") + ' style="display:inline-block;border-radius:999px;padding:13px 26px;background:#AD7F41;color:#fff;font-weight:600;text-decoration:none">' + t + '</a>'; };
-  var small = function (t) { return '<p style="margin:1.2em 0 0;font-size:.9rem;color:#DBCEB9">' + t + '</p>'; };
+    '<div style="font-family:\'Work Sans\',system-ui,sans-serif;color:#342D21;background:#DBCEB9;border:1px solid #DBCEB9;border-radius:22px;max-width:560px;width:calc(100% - 32px);margin:clamp(120px,14vw,190px) auto clamp(48px,8vw,96px);padding:32px 24px;text-align:center;line-height:1.6;box-sizing:border-box">' + inner + '</div>'; };
+  var h2 = function (t) { return '<h2 style="font-family:\'Playfair Display\',Georgia,serif;font-weight:500;font-size:1.8rem;line-height:1.2;margin:0 0 .6em;color:#342D21">' + t + '</h2>'; };
+  var btn = function (href, t, extra) { return '<a href="' + esc(href) + '"' + (extra || "") + ' style="display:inline-block;border-radius:999px;padding:13px 26px;background:#342D21;color:#fff;font-weight:600;text-decoration:none">' + t + '</a>'; };
+  var small = function (t) { return '<p style="margin:1.2em 0 0;font-size:.9rem;color:#5E5446">' + t + '</p>'; };
 
   // Keep clear space below the site header, whatever its height (it grows when the menu wraps).
   function fit() {
@@ -54,7 +54,7 @@
     mount.querySelector("a").addEventListener("click", function () { track(slug + "/gate-click"); });
     return;
   }
-  mount.innerHTML = card('<span style="font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:#DBCEB9">Your free workbook</span>' +
+  mount.innerHTML = card('<span style="font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:#7A5629">Your free workbook</span>' +
     h2(esc(d.title)) + "<p>It's ready for you. Print it, or fill it in on your tablet, and take it one step at a time.</p>" +
     btn(d.file, "Download the workbook (PDF)", ' target="_blank" rel="noopener"') +
     small("Tip: save it somewhere you'll see it again this week. I'll also send you a few emails with extra insights on this topic."));
