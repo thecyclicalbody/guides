@@ -23,6 +23,16 @@
   var btn = function (href, t, extra) { return '<a href="' + esc(href) + '"' + (extra || "") + ' style="display:inline-block;border-radius:999px;padding:13px 26px;background:#AD7F41;color:#fff;font-weight:600;text-decoration:none">' + t + '</a>'; };
   var small = function (t) { return '<p style="margin:1.2em 0 0;font-size:.9rem;color:#DBCEB9">' + t + '</p>'; };
 
+  // Keep clear space below the site header, whatever its height (it grows when the menu wraps).
+  function fit() {
+    var h = document.querySelector("header"), c = mount.querySelector(":scope > div");
+    if (!h || !c) return;
+    c.style.marginTop = "";
+    var gap = c.getBoundingClientRect().top - h.getBoundingClientRect().bottom;
+    if (gap < 56) c.style.marginTop = (parseFloat(getComputedStyle(c).marginTop) + 56 - gap) + "px";
+  }
+  setTimeout(fit, 0); setTimeout(fit, 800); window.addEventListener("resize", fit);
+
   var u; try { u = new URL(location.href); } catch (e) { return; }
   var slug = u.searchParams.get("f"), d = slug && DOWNLOADS[slug];
   if (!d) { mount.innerHTML = card(h2("Hmm, this link isn't complete") + '<p>Use the link from your sign-up, or find all free guides on the homepage.</p>' + btn("/", "Go to the homepage")); return; }
