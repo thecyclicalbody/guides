@@ -57,6 +57,6 @@
   mount.innerHTML = card('<span style="font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:#7A5629">Your free workbook</span>' +
     h2(esc(d.title)) + "<p>It's ready for you. Print it, or fill it in on your tablet, and take it one step at a time.</p>" +
     btn(d.file, "Download the workbook (PDF)", ' target="_blank" rel="noopener"') +
-    small("Tip: save it somewhere you'll see it again this week. I'll also send you a few emails with extra insights on this topic."));
+    small("Tip: save it somewhere you'll see it again this week."));
   mount.querySelector("a").addEventListener("click", function () { track(slug + "/download"); });
 })();
