@@ -3,7 +3,7 @@
    Tracks clicks and sign-up submissions only. Never sends names, emails or answers. */
 (function () {
   if (window.tcbSiteTrack) return; window.tcbSiteTrack = true;
-  var CFG = {"callUrl": "https://calendar.app.google/iEZnrSfxjV3P1isU7", "signups": {"/challenge": "signup/challenge-waitlist", "/cyclical-program": "signup/program-waitlist", "/access-free-hormone-ebook": "signup/hormone-ebook", "/flyer-lp": "signup/flyer-ebook", "/access-iron-check": "signup/iron-check", "/access-free-masterclass": "signup/masterclass"}};
+  var CFG = {"callUrl": "https://calendar.app.google/iEZnrSfxjV3P1isU7", "signups": {"/challenge": "signup/challenge-waitlist", "/cyclical-program": "signup/program-waitlist", "/access-free-hormone-ebook": "signup/hormone-ebook", "/flyer-lp": "signup/flyer-ebook", "/access-iron-check": "signup/iron-check", "/access-free-masterclass": "signup/masterclass", "/access-hormones-101": "signup/hormones-101"}};
   var local = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
   var queue = [];
   function page() { return location.pathname.replace(/\/+$/, "") || "/"; }
