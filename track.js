@@ -3,7 +3,7 @@
    Tracks clicks and sign-up submissions only. Never sends names, emails or answers. */
 (function () {
   if (window.tcbSiteTrack) return; window.tcbSiteTrack = true;
-  var CFG = {"callUrl": "https://calendar.app.google/iEZnrSfxjV3P1isU7", "signups": {"/challenge": "signup/challenge-waitlist", "/cyclical-program": "signup/program-waitlist", "/access-free-hormone-ebook": "signup/hormone-ebook", "/flyer-lp": "signup/flyer-ebook", "/access-iron-check": "signup/iron-check", "/access-free-masterclass": "signup/masterclass", "/access-hormones-101": "signup/hormones-101"}};
+  var CFG = {"callUrls": ["/book", "https://thecyclicalbody.com/book", "https://calendar.app.google/sGjSmFpAnSNmP71YA", "https://calendar.app.google/iEZnrSfxjV3P1isU7"], "signups": {"/challenge": "signup/challenge-waitlist", "/cyclical-program": "signup/program-waitlist", "/access-free-hormone-ebook": "signup/hormone-ebook", "/flyer-lp": "signup/flyer-ebook", "/access-iron-check": "signup/iron-check", "/access-free-masterclass": "signup/masterclass", "/access-hormones-101": "signup/hormones-101", "/6-week-challenge-lp": "signup/program-waitlist", "/access-pms": "signup/pms-workbook", "/access-hormone-pattern": "signup/hormone-pattern"}};
   var local = /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
   var queue = [];
   function page() { return location.pathname.replace(/\/+$/, "") || "/"; }
@@ -29,15 +29,17 @@
     var f = e.target; if (!f || inEmbed(f)) return;
     var em = f.querySelector('input[type="email"], input[name="email"]');
     if (!em || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em.value || "")) return;
-    var name = CFG.signups[page()] || ("signup" + page());
+    var name = f.closest("footer") ? "signup/footer-newsletter" : (CFG.signups[page()] || ("signup" + page()));
     send(name);
   }, true);
 
   /* clicks */
   document.addEventListener("click", function (e) {
+    if (e.target.closest && e.target.closest(".calgate-btn")) return send("book-calendar-open");
     var a = e.target.closest && e.target.closest("a[href]"); if (!a || inEmbed(a)) return;
     var href = a.getAttribute("href") || "", label = (a.textContent || "").trim().replace(/\s+/g, " ").slice(0, 40);
-    if (href.indexOf(CFG.callUrl) === 0) return send("book-call", { label: label });
+    var bare = href.replace(/[?#].*$/, "").replace(/\/+$/, "");
+    if (CFG.callUrls.some(function (u) { return bare === u || (u.indexOf("http") === 0 && href.indexOf(u) === 0); })) return send("book-call", { label: label });
     if (/^mailto:/.test(href)) return send("email-click", { label: label });
     if (/instagram\.com|tiktok\.com|youtube\.com/.test(href)) return send("social-click", { to: a.hostname.replace(/^www\./, "") });
     if (/#(signup|sign-up|ebook)$/.test(href) || a.matches(".sqs-block-button-element, [class*=btn]")) {
